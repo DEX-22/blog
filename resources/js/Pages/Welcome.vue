@@ -1,5 +1,6 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
+import moment from 'moment'
 
 defineProps({
     canLogin: {
@@ -75,14 +76,15 @@ function handleImageError() {
                             class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
                             <h1>{{ post.title }}</h1>
                             <div>
-                                <p>
-                                    {{ post.content }}
-                                </p>
+                                <p v-html="post.content"></p>
                             </div>
-                            <span class="flex justify-end">
-                                <h5>{{ post.created_by.name }}</h5>
-                                <h6>{{ post.created_at }}</h6>
-                            </span>
+                            <div class="flex justify-end w-full gap-2">
+                                <small>{{ post.creator.name }}
+                                    <vue-feather :type="post.visibility_icon" class="w-3 h-3" />
+                                </small>
+
+                                <small>{{ moment(post.created_at).format("d/MM/Y hh:mm") }}</small>
+                            </div>
 
                         </div>
 

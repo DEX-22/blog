@@ -33,7 +33,7 @@ defineProps({
                             {{ post.title }}
                         </h3>
                         <div>
-                            <p>{{ post.content }}</p>
+                            <p v-html="post.content"></p>
                         </div>
                         <div class="text-end p-2 w-full">
                             <span class="block">

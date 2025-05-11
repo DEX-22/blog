@@ -13,13 +13,27 @@ class Post extends Model
     use HasFactory;
 
     const PUBLIC = "public";
+    const ONLY_ME= "only-me";
     const DRAFT = "draft";
     const PRIVATE = "private";
 
+    const ICON_PUBLIC = "eye";
+    const ICON_ONLY_ME= "user";
+    const ICON_DRAFT = "edit-2";
+    const ICON_PRIVATE = "lock";
+
     const VISIBILITY = [
+        self::ONLY_ME,
         self::PUBLIC,
         self::DRAFT,
         self::PRIVATE
+    ];
+
+    const VISIBILITY_OPTIONS = [
+        self::ONLY_ME=> ["label"=>"Solo yo" ,"icon"=>self::ICON_PUBLIC],
+        self::PUBLIC=> ["label"=> "Publico","icon"=>self::ICON_ONLY_ME],
+        self::DRAFT=> ["label"=> "Borrador","icon"=>self::ICON_DRAFT],
+        self::PRIVATE=> ["label"=>"Privado" ,"icon"=>self::ICON_PRIVATE]
     ];
 
     protected $fillable = [
@@ -31,6 +45,26 @@ class Post extends Model
         'updated_by',
         'updated_at',
     ];
+
+    protected $appends = ["visibility_icon","visibility_label"];
+
+    public function getVisibilityIconAttribute(){
+        return match($this->visibility){
+            self::ONLY_ME => self::ICON_ONLY_ME,
+            self::DRAFT => self::ICON_DRAFT,
+            self::PRIVATE => self::ICON_PRIVATE,
+            self::PUBLIC => self::ICON_PUBLIC
+        };
+    }
+
+    public function getVisibilityLabelAttribute(){
+        return match($this->visibility){
+            self::ONLY_ME => "Solo yo",
+            self::DRAFT => "Borrador",
+            self::PRIVATE => "Privado",
+            self::PUBLIC => "Publico"
+        };
+    }
 
     public function creator()
     {
@@ -47,6 +81,6 @@ class Post extends Model
     }
     public static function getAllVisible(){
         return self::whereIn("visibility",[self::PUBLIC,self::PRIVATE])
-        ->get();
+        ->get("*");
     }
 }

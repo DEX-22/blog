@@ -1,41 +1,47 @@
 <script setup>
-import { computed } from 'vue';
+import { computed } from 'vue'
 
-const emit = defineEmits(['update:checked']);
+const emit = defineEmits(['update:modelValue'])
 
 const props = defineProps({
-    name:{
-        type: String,
-        required: true
-    },
-    checked: {
-        type: [Array, Boolean],
-        required: true,
-    },
-    value: {
-        default: null,
-    },
-});
+  modelValue: {
+    type: [String, Number],
+    required: true
+  },
+  value: {
+    type: [String, Number],
+    required: true
+  },
+  label: {
+    type: String,
+    default: ''
+  },
+  icon: {
+    type: String, // permite pasar componentes como Heroicons
+    default: null
+  }
+})
 
-const proxyChecked = computed({
-    get() {
-        return props.checked;
-    },
+const isSelected = computed(() => props.modelValue === props.value)
 
-    set(val) {
-        emit('update:checked', val);
-    },
-});
+const toggle = () => {
+  emit('update:modelValue', props.value)
+}
 </script>
 
 <template>
- title
-    <input
-        type="radio"
-        :value="value"
-        v-model="proxyChecked"
-        :name="name"
-        :id="name"
-        class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
-    />
+  <button
+    type="button"
+    @click="toggle"
+    :class="[
+      'px-4 py-2 rounded-full border text-sm font-medium focus:outline-none focus:ring-2 transition-all',
+      isSelected
+        ? 'bg-indigo-600 text-white border-indigo-600 focus:ring-indigo-300'
+        : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700'
+    ]"
+  >
+
+  <vue-feather v-if="icon" :type="icon" :class="class" class="w-3 h-3"  />
+    {{ label }}
+  </button>
 </template>

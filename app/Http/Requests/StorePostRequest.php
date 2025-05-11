@@ -23,7 +23,8 @@ class StorePostRequest extends FormRequest
     {
         return [
             "title",
-            "content"
+            "content",
+            "visibility"
         ];
     }
 }

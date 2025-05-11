@@ -56,11 +56,11 @@ defineProps({
                             {{ post.title }}
                         </h3>
                         <div>
-                            <p>{{ post.content }}</p>
+                            <p v-html="post.content"></p>
                         </div>
                         <div class="text-end p-2 w-full">
                             <span class="block">
-                                <h5>{{ post.creator.name }}</h5>
+                                <h5>{{ post.creator.name }} <vue-feather :type="post.visibility_icon" /> </h5>
                                 <h6>{{ moment(post.created_at).format("d MM YYYY") }}</h6>
                             </span>
                         </div>

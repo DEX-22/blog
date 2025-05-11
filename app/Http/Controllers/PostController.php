@@ -27,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $visibility = Post::VISIBILITY;
+        $visibility = Post::VISIBILITY_OPTIONS;
         $post = new Post();
     
         return Inertia::render('MisPosts/Create',[
