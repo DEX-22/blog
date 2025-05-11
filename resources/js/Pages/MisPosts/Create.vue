@@ -16,7 +16,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 defineProps({
     visibility: {
-        type: Array,
+        type: Object,
         required: true
     },
     post:{

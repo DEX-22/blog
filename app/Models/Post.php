@@ -53,7 +53,7 @@ class Post extends Model
             self::ONLY_ME => self::ICON_ONLY_ME,
             self::DRAFT => self::ICON_DRAFT,
             self::PRIVATE => self::ICON_PRIVATE,
-            self::PUBLIC => self::ICON_PUBLIC
+            default => self::ICON_PUBLIC
         };
     }
 
@@ -62,7 +62,7 @@ class Post extends Model
             self::ONLY_ME => "Solo yo",
             self::DRAFT => "Borrador",
             self::PRIVATE => "Privado",
-            self::PUBLIC => "Publico"
+            default => "Publico"
         };
     }
 
@@ -71,16 +71,19 @@ class Post extends Model
         return $this->belongsTo(User::class,'created_by','id');
     }
 
-
     public static function getOwns(){
-        return self::with('creator')->where("created_by",Auth::id())->get();
+        return self::with('creator')->where("created_by",Auth::id())
+        ->orderBy("created_at","desc")
+        ->get();
     }
     public static function getAllPublic() : Collection
     {
-        return self::with('creator')->where("visibility",self::PUBLIC)->get("*");
+        return self::with('creator')->where("visibility",self::PUBLIC)
+        ->orderBy("created_at","desc")->get("*");
     }
     public static function getAllVisible(){
-        return self::whereIn("visibility",[self::PUBLIC,self::PRIVATE])
+        return self::with('creator')->whereIn("visibility",[self::PUBLIC,self::PRIVATE])
+        ->orderBy("created_at","desc")
         ->get("*");
     }
 }

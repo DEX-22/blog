@@ -45,7 +45,7 @@ class PostController extends Controller
         $post = new Post([
             "title" => $request["title"],
             "content" => $request["content"],
-            "visibility" => Post::PUBLIC,
+            "visibility" => $request["visibility"],
             "created_by" => Auth::id()
         ]);
 

@@ -83,7 +83,7 @@ function handleImageError() {
                                     <vue-feather :type="post.visibility_icon" class="w-3 h-3" />
                                 </small>
 
-                                <small>{{ moment(post.created_at).format("d/MM/Y hh:mm") }}</small>
+                                <small>{{ moment(post.created_at).format("d/MM/Y hh:mm A") }}</small>
                             </div>
 
                         </div>

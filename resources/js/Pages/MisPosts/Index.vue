@@ -29,8 +29,7 @@ defineProps({
                 <Link 
                     :href="route('post.create')"
                     >
-                    
-                    <!-- class="text-white bg-green-600 px-4 py-2 rounded-xl" -->
+                     
                     Nuevo Post
                 </Link>
 
@@ -50,7 +49,7 @@ defineProps({
                 </div>
                 <div v-else class=" overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 p-4">
                     <div v-for="post in posts"
-                        class="my-2 p-6 bg-neutral-500 text-gray-900 dark:text-gray-100 flex flex-wrap gap-2 rounded-xl">
+                        class="my-2 p-6  border border-neutral-500 text-gray-900 dark:text-gray-100 flex flex-wrap gap-2 rounded-xl">
 
                         <h3 class="mb-1 w-full">
                             {{ post.title }}
@@ -58,12 +57,12 @@ defineProps({
                         <div>
                             <p v-html="post.content"></p>
                         </div>
-                        <div class="text-end p-2 w-full">
-                            <span class="block">
-                                <h5>{{ post.creator.name }} <vue-feather :type="post.visibility_icon" /> </h5>
-                                <h6>{{ moment(post.created_at).format("d MM YYYY") }}</h6>
-                            </span>
-                        </div>
+                        <div class="flex justify-end p-2 w-full gap-2">
+                            
+                                <small>{{ post.creator.name }} <vue-feather :type="post.visibility_icon" class="w-3 h-3" /> </small>
+                                <small>{{ moment(post.created_at).format("d/MM/Y hh:mm A") }}</small>
+ 
+                            </div>
 
                     </div>
                 </div>
